@@ -1,0 +1,4 @@
+window_w=800
+window_h=550
+fps=1000
+debug=0
