@@ -41,7 +41,16 @@ PtrManager::~PtrManager() {
 	SDL_Quit();
 }
 
+// 将指针加入到管理器中，不重复添加
 void PtrManager::add(void *ptr, int type) {
+	// 先检查是否在管理器中
+	struct ptr_node *p = head->next;
+	while (p) {
+		// 找到了一样的指针，则直接return
+		if (ptr == p->ptr_to_free) return;
+		p = p->next;
+	}
+
 	struct ptr_node *new_node = (struct ptr_node *)malloc(sizeof(struct ptr_node));
 	new_node->ptr_to_free = ptr;
 	new_node->type = type;

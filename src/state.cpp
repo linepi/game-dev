@@ -3,6 +3,7 @@
 #include <utils.h>
 #include <debug.h>
 #include <state.h>
+#include <menulist.h>
 #include <wmalloc.h>
 #include <game1/game.h>
 #include <game2/game.h>
@@ -44,6 +45,8 @@ bool State::has_render() {
 #define NR_SETTINGS_SEL 5
 
 static void main_menu_render(State *s) {
+	static MenuList menulist();
+
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // black
 	SDL_RenderClear(renderer);
 	SDL_Surface *sur_title = get_font("./assets/mouse.ttf", 70, "Lemonorn's World", white);
