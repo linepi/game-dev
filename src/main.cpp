@@ -6,19 +6,9 @@
 #include <game1/game.h>
 #include <game2/game.h>
 
-const char *font_path = "./assets/mouse.ttf";
-SDL_Texture *tex_rabbits = NULL;
-SDL_Surface *sur_rabbits = NULL;
-
 int main(int argc, char* args[]) {
 	game_init();
-
-	tex_rabbits = get_image_tex("./assets/rabbit.png");
-	sur_rabbits = get_image("./assets/rabbit.png");
-	printf("w = %d h = %d\n", sur_rabbits->w, sur_rabbits->h);
-	
 	uint32_t last = SDL_GetTicks();
-
 	int frames = 0;
 	while (!quit) { 
 		uint32_t loop_start_ms = SDL_GetTicks();
@@ -81,6 +71,11 @@ void event_loop() {
 				case SDLK_RETURN: {
 					if (cur_state->ismenu())
 						cur_state = cur_state->choose();
+					break;
+				}
+				case SDLK_ESCAPE: {
+					cur_state = cur_state->prev;
+					break;
 				}
 			}
 			break;

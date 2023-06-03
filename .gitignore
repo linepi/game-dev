@@ -1,3 +1,14 @@
-.vscode
-build
-test
+**
+!assets
+!assets/**
+!include
+!include/**
+!src
+!src/**
+!thirdparty
+!thirdparty/**
+!.gitignore
+!config.json
+!Makefile
+!README.md
+**/.DS_Store

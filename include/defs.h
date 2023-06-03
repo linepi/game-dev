@@ -31,9 +31,12 @@ extern struct config game_config;
 #define WINDOW_W game_config.window_w
 #define WINDOW_H game_config.window_h
 error_t config_init();
+extern const char *mouse_ttf_path;
+extern const char *menu_ttf_path;
+extern const char *text_ttf_path;
 
 /* init.h */
-#define FONT_POOL_SIZE 20
+#define FONT_POOL_SIZE 200
 
 struct font_pool_t {
 	TTF_Font *font;

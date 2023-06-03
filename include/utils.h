@@ -12,5 +12,8 @@ SDL_Texture *get_image_tex(const char* path);
 SDL_Surface *get_font(const char* path, int size, const char *content, SDL_Color color);
 SDL_Texture *get_font_tex(const char* path, int size, const char *content, SDL_Color color);
 
+/* macros */
+#define MIN(a, b) (a < b ? a : b);
+#define MAX(a, b) (a > b ? a : b);
 
 #endif

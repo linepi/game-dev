@@ -46,6 +46,7 @@ SDL_Texture* get_image_tex(const char *path) {
 }
 
 SDL_Surface* get_font(const char *path, int size, const char *content, SDL_Color color) {
+	if (size == 0) return NULL;
 	assert(nr_font < FONT_POOL_SIZE);
 
 	TTF_Font *font;
@@ -72,6 +73,7 @@ SDL_Surface* get_font(const char *path, int size, const char *content, SDL_Color
 }
 
 SDL_Texture* get_font_tex(const char *path, int size, const char *content, SDL_Color color) {
+	if (size == 0) return NULL;
 	SDL_Surface *sur = get_font(path, size, content, color);
 	SDL_Texture *res = SDL_CreateTextureFromSurface(renderer, sur);
 	if (res) ptr_manager.add((void *)res, TEXTURE_PTR);

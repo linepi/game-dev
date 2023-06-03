@@ -17,6 +17,7 @@ public:
 	void (*render_func)(State *);
 	const char *name;
 	int type;
+	State *prev;
 	State **menus;
 
 	State(State **menus, int nr_selection, int cur_selection, void (*render_func)(State *), int type, const char *name) {
