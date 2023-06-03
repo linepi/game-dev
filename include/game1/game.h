@@ -5,7 +5,7 @@ namespace game1 {
 
 extern const char *game_name;
 void menu_render(State *s);
-void render(State *s);
+void game_render(State *s);
 void rules_render(State *s);
 void settings_render(State *s);
 void init();

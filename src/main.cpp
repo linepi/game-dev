@@ -34,7 +34,8 @@ int main(int argc, char* args[]) {
 }
 
 void update() {
-
+	if (cur_state->has_update()) 
+		cur_state->update(); 
 }
 
 void render() {
@@ -47,38 +48,7 @@ void render() {
 void event_loop() {
 	SDL_Event e; 
 	while (SDL_PollEvent(&e)) { 
-		switch (e.type) {
-		case SDL_QUIT: 
-			quit = true; 
-			break;
-		case SDL_KEYDOWN: 
-			if (e.key.keysym.sym == SDLK_q) {
-				quit = true;
-			}
-			switch (e.key.keysym.sym) {
-				case SDLK_w: case SDLK_UP:  
-					if (cur_state->ismenu())
-						cur_state->prev_select();
-					break;
-				case SDLK_s: case SDLK_DOWN:
-					if (cur_state->ismenu())
-						cur_state->next_select();
-					break;
-				case SDLK_a: case SDLK_LEFT:
-					break;
-				case SDLK_d: case SDLK_RIGHT:
-					break;
-				case SDLK_RETURN: {
-					if (cur_state->ismenu())
-						cur_state = cur_state->choose();
-					break;
-				}
-				case SDLK_ESCAPE: {
-					cur_state = cur_state->prev;
-					break;
-				}
-			}
-			break;
-		}
+		if (cur_state->has_event_update())
+			cur_state = cur_state->event_update(&e);
 	} 
 }

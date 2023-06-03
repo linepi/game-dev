@@ -12,6 +12,34 @@ void State::render() {
 	this->render_func(this);
 }
 
+bool State::has_render() {
+	return this->render_func != NULL;
+}
+
+void State::update() {
+	this->update_func(this);
+}
+
+void State::set_update(void (*func)(State *)) {
+	this->update_func = func;
+}
+
+bool State::has_update() {
+	return this->update_func != NULL;
+}
+
+void State::set_event_update(State* (*func)(State *, SDL_Event *)) {
+	this->event_update_func = func;
+}
+
+State* State::event_update(SDL_Event *e) {
+	return this->event_update_func(this, e);
+}
+
+bool State::has_event_update() {
+	return this->event_update_func != NULL;
+}
+
 void State::prev_select() {
 	cur_selection = 
 		cur_selection == 0 ? 
@@ -36,8 +64,3 @@ State* State::choose() {
 bool State::ismenu() {
 	return this->menus != NULL && this->type == STATE_MENU;
 }
-
-bool State::has_render() {
-	return this->render_func != NULL;
-}
-

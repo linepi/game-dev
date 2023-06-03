@@ -34,6 +34,63 @@ static void main_menu_render(State *s) {
 	menulist.render();	
 }
 
+State* menu_event_update(State *s, SDL_Event *e) {
+	State *new_state = s;
+	switch (e->type) {
+	case SDL_QUIT: 
+		quit = true; 
+		break;
+	case SDL_KEYDOWN: 
+		if (e->key.keysym.sym == SDLK_q) {
+			quit = true;
+		}
+		switch (e->key.keysym.sym) {
+			case SDLK_w: case SDLK_UP:  
+				s->prev_select();
+				break;
+			case SDLK_s: case SDLK_DOWN:
+				s->next_select();
+				break;
+			case SDLK_a: case SDLK_LEFT:
+				break;
+			case SDLK_d: case SDLK_RIGHT:
+				break;
+			case SDLK_RETURN: {
+				new_state = cur_state->choose();
+				break;
+			}
+			case SDLK_ESCAPE: {
+				new_state = cur_state->prev;
+				break;
+			}
+		}
+		break;
+	}
+	return new_state;
+}
+
+State* common_event_update(State *s, SDL_Event *e) {
+	State *new_state = s;
+	switch (e->type) {
+	case SDL_QUIT: 
+		quit = true; 
+		break;
+	case SDL_KEYDOWN: 
+		switch (e->key.keysym.sym) {
+			case SDLK_q: {
+				quit = true;
+				break;
+			}
+			case SDLK_ESCAPE: {
+				new_state = cur_state->prev;
+				break;
+			}
+		}
+		break;
+	}
+	return new_state;
+}
+
 static void about_render(State *s) {
 	static const char *items_name[] = {
 		"This is a SDL game application. ",
@@ -53,6 +110,7 @@ static void quit_render(State *s) {
 
 error_t menu_init() {
 	State *main_menu = new State(NULL, NR_MAIN_SEL, 0, main_menu_render, STATE_MENU, "main_menu");
+	main_menu->set_event_update(menu_event_update);
 	ptr_manager.add((void*)main_menu, MENU_PTR);
 	main_menu->prev = main_menu;
 
@@ -61,6 +119,7 @@ error_t menu_init() {
 	about->prev = main_menu;
 
 	State *settings = new State(NULL, NR_SETTINGS_SEL, 0, settings_render, STATE_MENU, "settings");
+	main_menu->set_event_update(menu_event_update);
 	ptr_manager.add((void*)settings, MENU_PTR);
 	settings->prev = main_menu;
 
